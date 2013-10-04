@@ -29,5 +29,34 @@ define({
 
     "clone": function( object ){
         return this.merge( {}, object );
-    }
+    },
+
+    "getCss": function( domNode ){
+        var returns = {},
+            camelize = function(a,b){
+                return b.toUpperCase();
+            },
+            style, i, prop, camel, val;
+
+        if( window.getComputedStyle ){
+            style = window.getComputedStyle( domNode, null );
+            for( i = 0, l = style.length; i < l; i++ ){
+                prop    = style[i];
+                camel   = prop.replace( /\-([a-z])/g, camelize );
+                val     = style.getPropertyValue( prop );
+                returns[camel] = val;
+            };
+
+            return returns;
+        };
+
+        if( style = domNode.currentStyle ){
+            for( var prop in style ){
+                returns[prop] = style[prop];
+            };
+            return returns;
+        };
+
+        return returns;
+    },
 })

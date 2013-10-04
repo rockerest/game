@@ -1,9 +1,9 @@
 define(
-    ["jquery", "lib/utils"],
+    ["jquery", "lib/utils", "lib/bigInteger"],
     function( $, Utils ){
         var Hud = function( options ){
             var defaults    = {
-                    money: 0
+                    money: BigInteger(0)
                 },
                 money;
 
@@ -21,6 +21,7 @@ define(
         };
 
         Hud.prototype.refresh = function(){
+            var index;
             for( index in this.items ){
                 var item = this.items[index];
                 if( item.hasOwnProperty( "refresh" ) && typeof item.refresh === "function" ){
@@ -30,6 +31,7 @@ define(
         };
 
         Hud.prototype.bindEvents = function(){
+            var index;
             for( index in this.items ){
                 var item = this.items[index];
                 if( item.hasOwnProperty( "bindEvents" ) && typeof item.bindEvents === "function" ){
@@ -45,11 +47,18 @@ define(
 
             return {
                 refresh: function(){
-                    $amt.val( parseFloat(hud.options.money).toFixed( 2 ) );
+                    var past = BigInteger.parse( $amt.val() ),
+                        now = hud.options.money;
+
+                    $amt.val( now );
+
+                    if( past.compare( now ) !== 0 ){
+                        $amt.trigger( "change" );
+                    }
                 },
                 bindEvents: function(){
-                    $moneyButton.on( "click", function(){
-                        hud.options.money += 20;
+                    $moneyButton.on( "mousemove", function(){
+                        hud.options.money = BigInteger( hud.options.money ).multiply(20001).divide(20000);
                         $(this).blur();
                     });
                 }

@@ -1,13 +1,15 @@
 define(
-    ["jquery", "main", "hud"],
-    function( $, Main, Hud ){
+    ["jquery", "main", "hud", "dom"],
+    function( $, Main, Hud, Dom ){
         var Init = {};
 
         Init.startApp = function(){
-            var hud;
-
             $(function(){
-                Main.init( (new Hud()) );
+                Main.init( (new Hud({
+                    money: 99999999
+                })) );
+
+                Dom.bindEvents();
 
                 setInterval( function(){
                     Main.loop();
