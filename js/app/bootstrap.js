@@ -3,7 +3,7 @@ require.config({
     "paths": {
         "lib": "../lib",
 
-        "jquery": "//ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min"
+        "jquery": "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min"
     },
     "shim": {
         "jquery": {
