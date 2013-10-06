@@ -1,14 +1,15 @@
 define(
-    function(){
+    ["hud"],
+    function( Hud ){
         var Main = {},
-            storedHud;
+            hud;
 
-        Main.init = function( hud ){
-            storedHud = hud;
+        Main.init = function( businesses ){
+            hud = new Hud( businesses );
         };
 
         Main.loop = function(){
-            storedHud.refresh();
+            hud.refresh();
         };
 
         return Main;
