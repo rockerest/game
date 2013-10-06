@@ -1,24 +1,17 @@
 define(
-    ["jquery", "lib/utils", "lib/bigInteger"],
+    ["jquery", "lib/utils", "BigInteger"],
     function( $, Utils ){
-        var Hud = function( options ){
-            var defaults    = {
-                    money: BigInteger(0)
-                },
-                money;
-
-            this.options    = Utils.merge( defaults, options );
+        var Hud = function( businesses ){
+            this.businesses = businesses;
             this.items      = [];
 
-            this.items.push( this.hookIntoMoney() );
+            this.items.push( this.hook( "money" ) );
+            this.items.push( this.hook( "product" ) );
+            this.items.push( this.hook( "research" ) );
 
             this.bindEvents();
             this.refresh();
         }
-
-        Hud.prototype.update = function( options ){
-            this.options = Utils.merge( this.options, options );
-        };
 
         Hud.prototype.refresh = function(){
             var index;
@@ -40,29 +33,38 @@ define(
             }
         };
 
-        Hud.prototype.hookIntoMoney = function(){
-            var $amt            = $( "#money input" ),
-                $moneyButton    = $( "#money .add-on" ),
-                hud             = this;
+        Hud.prototype.hook = function( into ){
+            var $amt    = $( "#" + into + " input" ),
+                $button = $( "#" + into + " .add-on" ),
+                ucf     = into.charAt(0).toUpperCase() + into.slice(1)
+                hud     = this;
 
-            return {
-                refresh: function(){
-                    var past = BigInteger.parse( $amt.val() ),
-                        now = hud.options.money;
+                return {
+                    refresh: function(){
+                        var past    = BigInteger.parse( $amt.val() ),
+                            now     = 0,
+                            i;
 
-                    $amt.val( now );
+                        for( i in hud.businesses ){
+                            now = BigInteger( now ).add( hud.businesses[i]["modify" + ucf]() );
+                        }
 
-                    if( past.compare( now ) !== 0 ){
-                        $amt.trigger( "change" );
+                        $amt.val ( now );
+
+                        if( past.compare( now ) !== 0 ){
+                            $amt.trigger( "change" );
+                        }
+                    },
+                    bindEvents: function(){
+                        var i;
+
+                        $button.on( "click", function(){
+                            for( i in hud.businesses ){
+                                hud.businesses[i]["modify" + ucf]( 1 );
+                            }
+                        });
                     }
-                },
-                bindEvents: function(){
-                    $moneyButton.on( "mousemove", function(){
-                        hud.options.money = BigInteger( hud.options.money ).multiply(20001).divide(20000);
-                        $(this).blur();
-                    });
-                }
-            }
+                };
         };
 
         return Hud;

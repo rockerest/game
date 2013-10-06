@@ -3,7 +3,9 @@ require.config({
     "paths": {
         "lib": "../lib",
 
-        "jquery": "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min"
+        "jquery": "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min",
+
+        "BigInteger": "../lib/bigInteger"
     },
     "shim": {
         "jquery": {
@@ -11,6 +13,9 @@ require.config({
                 var local$ = $.noConflict( true );
                 return local$;
             }
+        },
+        "BigInteger": {
+            "exports": "BigInteger"
         }
     }
 });
