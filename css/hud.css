@@ -1,0 +1,102 @@
+.input-prepend{
+    margin-right: .75em;
+}
+
+.input-prepend input{
+    border-radius: 0 6px 6px 0;
+    padding: .1em 0 0 .5em;
+}
+
+.input-prepend span{
+    border-radius: 6px 0 0 6px;
+    border: 1px solid #999999;
+
+    background-color: #CCCCCC;
+
+    padding: .25em;
+    margin-top: 1px;
+}
+
+#bar{
+    background-color: #EEEEFF;
+    color: #333333;
+
+    padding: 1em;
+
+    cursor: default;
+}
+
+#bar a{
+    text-decoration: none;
+}
+
+#stats input{
+    height: 2.1em;
+
+    margin-left: -.375em;
+
+    border: 1px solid #999999;
+}
+
+#money{
+    max-width: 75%;
+}
+
+#money input{
+    max-width: 100%;
+}
+
+#menu{
+    display: inline-block;
+    position: relative;
+}
+
+#menu > a{
+    color: #000099;
+}
+
+#menu .dropdown-menu li{
+    padding: .5em .25em;
+}
+
+#menu .dropdown-menu li:hover{
+    background-color: #000099;
+    color: #DDDDDD;
+}
+
+#menu .dropdown-toggle{
+    font-size: 1.45em;
+
+    display: inline-block;
+
+    margin: .1em 0 0 0;
+}
+
+#menu .dropdown-menu a{
+    color: inherit;
+}
+
+.dropdown-menu{
+    display: none;
+    float: right;
+
+    color: #666666;
+    background-color: #FFFFFF;
+
+    border: 1px solid rgba(0, 0, 0, 0.2);
+    border-radius: .3em;
+    box-shadow: 0 5px 10px rgba(0, 0, 0, 0.2);
+
+    position: absolute;
+    z-index: 1000;
+    right: 0;
+    top: 100%;
+
+    margin: 2px 0 0;
+    min-width: 6em;
+    padding: 5px 0;
+}
+
+.dropdown-menu.open{
+    display: block;
+}
