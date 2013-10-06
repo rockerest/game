@@ -11,6 +11,19 @@ define(
             $( "input.scales" ).on( "change", function(){
                 Dom.scaleInput( this );
             });
+
+            $( "#menu > a" ).on( "click", function( event ){
+                $( "#menu ." + $(this).data( "toggle" ) ).toggleClass( "open" );
+                event.stopPropagation();
+            });
+
+            $( document ).on( "click", function(){
+                $( ".clickAnyToClose, .clickOutsideToClose" ).removeClass( "open" );
+            });
+
+            $( ".clickOutsideToClose" ).on( "click", function( event ){
+                event.stopPropagation();
+            });
         };
 
         Dom.scaleInput = function( input ){
@@ -41,9 +54,7 @@ define(
                 .hide();
 
             if( $input.width() !== $sizer.width() ){
-                $input.animate({
-                    width: $sizer.width() + 20
-                }, 200);
+                $input.width( $sizer.width() + 8 );
             }
         };
 
