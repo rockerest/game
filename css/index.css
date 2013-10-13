@@ -1,0 +1,13 @@
+#businesses div{
+    width: 5em;
+
+    border: 1px solid #CCCCCC;
+    border-radius: .35em;
+
+    margin: .5em;
+    padding: .5em;
+
+    text-align: left;
+
+    float: left;
+}
