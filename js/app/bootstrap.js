@@ -5,7 +5,8 @@ require.config({
 
         "jquery": "https://ajax.googleapis.com/ajax/libs/jquery/1.10.2/jquery.min",
 
-        "BigInteger": "../lib/bigInteger"
+        "BigInteger": "../lib/bigInteger",
+        "underscore": "../lib/underscore/underscore"
     },
     "shim": {
         "jquery": {
@@ -16,6 +17,14 @@ require.config({
         },
         "BigInteger": {
             "exports": "BigInteger"
+        },
+        "underscore": {
+            "exports": "_",
+            "init": function(){
+                var local_ = window._;
+                delete window._;
+                return local_;
+            }
         }
     }
 });
