@@ -1,6 +1,6 @@
 define(
-    ["jquery", "lib/utils", "BigInteger"],
-    function( $, Utils ){
+    ["jquery", "underscore", "BigInteger"],
+    function( $, _ ){
         var Hud = function( businesses ){
             this.businesses = businesses;
             this.items      = [];
@@ -8,6 +8,11 @@ define(
             this.items.push( this.hook( "money" ) );
             this.items.push( this.hook( "product" ) );
             this.items.push( this.hook( "research" ) );
+
+            _.each( businesses, function( business ){
+                this.integrate( business );
+                this.items.push( business );
+            }, this );
 
             this.bindEvents();
             this.refresh();
@@ -20,6 +25,9 @@ define(
                 if( item.hasOwnProperty( "refresh" ) && typeof item.refresh === "function" ){
                     item.refresh();
                 }
+                else if( item instanceof this.businesses[0].constructor && typeof item.refresh === "function" ){
+                    item.refresh();
+                }
             }
         };
 
@@ -30,7 +38,22 @@ define(
                 if( item.hasOwnProperty( "bindEvents" ) && typeof item.bindEvents === "function" ){
                     item.bindEvents();
                 }
+                else if( item instanceof this.businesses[0].constructor && typeof item.bindEvents === "function" ){
+                    item.bindEvents();
+                }
             }
+        };
+
+        Hud.prototype.integrate = function( business ){
+            var $newBiz = $( "<div></div>" );
+
+            $newBiz.append( "<span>" + business.getMoney() + "</span><br />" );
+            $newBiz.append( "<span>" + business.getProduct() + "</span><br />" );
+            $newBiz.append( "<span>" + business.getResearch() + "</span>" );
+
+            business.setContainer( $newBiz );
+
+            $( "#businesses" ).append( $newBiz );
         };
 
         Hud.prototype.hook = function( into ){

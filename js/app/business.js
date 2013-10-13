@@ -1,6 +1,6 @@
 define(
-    ["lib/utils", "BigInteger"],
-    function( Utils ){
+    ["underscore", "BigInteger"],
+    function( _ ){
         var Business = function( resources ){
             var defaults = {
                 money: 0,
@@ -8,7 +8,7 @@ define(
                 research: 0
             };
 
-            this.resources = Utils.merge( defaults, resources );
+            this.resources = _.merge( {}, defaults, resources );
         };
 
         Business.prototype.getMoney = function(){
@@ -36,6 +36,22 @@ define(
         Business.prototype.modifyResearch = function( diff ){
             this.resources.research = BigInteger(this.resources.research).add( diff );
             return this.resources.research;
+        };
+
+        Business.prototype.setContainer = function( container ){
+            if( container.jquery ){
+                this.container = container[0];
+            }
+            else{
+                this.container = container;
+            }
+        };
+
+        Business.prototype.refresh = function(){
+            var spans = $( this.container ).children( "span" );
+            spans.eq( 0 ).text( this.getMoney() );
+            spans.eq( 1 ).text( this.getProduct() );
+            spans.eq( 2 ).text( this.getResearch() );
         };
 
         return Business;

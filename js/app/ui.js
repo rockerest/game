@@ -4,12 +4,15 @@ define(
         var Ui = {};
 
         Ui.startup = function(){
-            var business = new Business({
-                    money: 10000,
-                    product: 15,
+            var businesses = [];
+
+            for( i = 0; i < 100; i++ ){
+                businesses.push( new Business({
+                    money: 1000000,
+                    product: 150,
                     research: 0
-                }),
-                businesses = [business];
+                }) );
+            }
 
             Main.init( businesses );
 
