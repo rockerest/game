@@ -8,7 +8,7 @@ define(
                 research: 0
             };
 
-            this.resources = _.merge( {}, defaults, resources );
+            this.resources = _.extend( {}, defaults, resources );
         };
 
         Business.prototype.getMoney = function(){
